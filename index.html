@@ -113,12 +113,51 @@
                             </h2>
                         </div>
                     </div>
-                    <div id="todoColumn" class="kanban-column p-4 min-h-[500px] space-y-3" data-status="done">
-                        
+                    <div id="todoColumn" class="kanban-column p-4 min-h-[500px] space-y-3" data-status="done">      
                     </div>
                 </div>
             </div>
         </main>
+        <div id="taskModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+            <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+                <div class="bg-indigo-600 px-6 py-4 rounded-t-lg">
+                    <h3 class="text-xl font-semibold text-white" id="modalTitle">Add New task</h3>
+                </div>
+                <div class="p-6">
+                    <form id="taskForm">
+                        <input type="hidden" id="taskId" value="">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Task Title *</label>
+                            <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" id="title" name="title" placeholder="Enter task title" required>
+                        </div>
+                         <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="description">Description </label>
+                            <textarea type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" id="description" name="description" placeholder="Enter Task Description"></textarea>
+                        </div>
+                         <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="priority">Priority *</label>
+                            <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" id="priority" name="priority" required>
+                                <option value="low">Low</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                         <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="due_date"></label>
+                            <input type="date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" id="due_date" name="due_date">
+                        </div>
+                        <div class="flex justify-end space-x-3">
+                            <button type="button" id="cancelModal" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-200">
+                                Cancel
+                            </button>
+                            <button type="submit"  class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-200">
+                                Save Task
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/jquery-ui@1.13.2/dist/jquery-ui.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

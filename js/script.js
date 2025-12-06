@@ -24,6 +24,28 @@ function initializeApp(){
     $('#due_date').attr('min',today );
 }
 
+function initializeSortable(){
+    $(".kanban-column").sortable({
+        connectWith:'.kanban-column',
+        cursor:'move',
+        opacity:0.7,
+        placeholder:'ui-sortable-placeholder',
+        start:function(event,ui){
+            ui.item.addClass('dragging');
+        },
+        stop:function(event,ui){
+            ui.item.removeClass('dragging');
+        },
+        update:function(event,ui){
+            if(this === ui.item.parent()[0]){
+                const taskId = ui.item.data('task-id');
+                const newStatus = $(this).data('status');
+                updateTaskStatus(taskId,newStatus);
+            }
+        }
+    }).disableSelection();
+}
+
 function loadTasks(){
     showLoading();
     $.ajax({
@@ -120,7 +142,7 @@ function updateTaskStatus(taskId,newStatus){
         },
         data:JSON.stringify({status:newStatus}),
         success : function(){
-            udpateStats();
+            updateStats();
             updateColumnCounts();
 
             Swal.fire({
@@ -206,7 +228,7 @@ function deleteTask(taskId){
                 },
                 error:function(xhr, status, error){
                     console.error('Error delete task',error);
-                    Swla.fire({
+                    Swal.fire({
                         icon:'error',
                         title:'Error',
                         text:'Failed to delete task',
@@ -253,7 +275,7 @@ function handleTaskSubmit(e){
         error:function(xhr, status, error){
             console.error('Error Saving task',error);
             const errorMessage = xhr.responseJSON.message || 'Failed to save task';
-            Swla.fire({
+            Swal.fire({
                 icon:'error',
                 title:'Error',
                 text:errorMessage,
@@ -282,6 +304,22 @@ function updateStats(){
             console.error('Error loading stats',error);
         }
     })
+}
+
+function updateColumnCounts(){
+    $("#todoCount").text($("#todoColumn .task-card").length);
+    $("#progressCount").text($("#inProgressColumn .task-card").length);
+    $("#doneCount").text($("#doneColumn .task-card").length);
+}
+
+function displayEmptyState(){
+    const emptyHtml= `
+        <div class="empty-state">
+            <p>No tasks yet</p>
+            <button onclick="openAddTaskModal()" class="mt-2 text-indigo-600 hover:text-indigo-700">Create your first tasks</button>
+        </div>
+    `;
+    $("#todoColumn").html(emptyHtml);
 }
 
 function openAddTaskModal(){

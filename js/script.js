@@ -278,7 +278,7 @@ function updateStats(){
             $("#completedTasks").text(stats.completed || 0);
             $("#highPriorityTasks").text(stats.high_priority || 0);
         },
-        error: functrion(xhr,status,error){
+        error: function(xhr,status,error){
             console.error('Error loading stats',error);
         }
     })

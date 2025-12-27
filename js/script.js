@@ -74,7 +74,7 @@ function loadTasks(){
 }
 
 function displayTasks(tasks){
-    $("$todoColum,#inProgressColumn,#doneColumn").empty();
+    $("$todoColumn,#inProgressColumn,#doneColumn").empty();
     if(!tasks || tasks.length===0){
         displayEmptyState();
         return;
